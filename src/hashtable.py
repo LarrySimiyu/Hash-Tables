@@ -49,7 +49,7 @@ class HashTable:
         '''
         return self._hash(key) % self.capacity
 
-
+# testing code 
     def insert(self, key, value):
         '''
         Store the value with the given key.
@@ -58,7 +58,29 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        if self.count / self.capacity > 0/7:
+            self.resize()
+        
+        if self.count / self.capacity < 0.2 and self.resized == True:
+            self.resize(0.5)
+
+        index = self._hash_mod(key)
+        #save the value to that index if index is none
+
+        if not self.storage[index]:
+            self.storage[index] = LinkedPair(key, value)
+            self.count += 1
+
+        else:
+            node = self.storage[index]
+            while node.next and node.key != key:
+                node = node.next
+            if node.key == key:
+                node.value = value
+            else:
+                node.next = LinkedPair(key, value)
+                self.count += 1
+
 
 
 
